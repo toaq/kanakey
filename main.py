@@ -29,8 +29,8 @@ def handle_command(cmd):
         for i in [3, 2, 1]:
             if cmd[:i] in hiri:
                 print(hiri[cmd[:i]], end="")
-            cmd = cmd[i:]
-            break
+                cmd = cmd[i:]
+                break
 
     print()
 
