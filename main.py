@@ -1,58 +1,95 @@
 
 import keyboard
+import clipboard
 import time
 
-accum = ""
-alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-         "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-         "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
-hiri = {}
-hiri["a"] = "あ";  hiri["i"] = "い";   hiri["u"] = "う";   hiri["e"] = "え";  hiri["o"] = "お"
-hiri["ka"] = "か"; hiri["ki"] = "き";  hiri["ku"] = "く";  hiri["ke"] = "け"; hiri["ko"] = "こ"
-hiri["sa"] = "さ"; hiri["shi"] = "し"; hiri["su"] = "す";  hiri["se"] = "せ"; hiri["so"] = "そ"
-hiri["ta"] = "た"; hiri["chi"] = "ち"; hiri["tsu"] = "つ"; hiri["te"] = "て"; hiri["to"] = "と"
-hiri["na"] = "な"; hiri["ni"] = "に";  hiri["nu"] = "ぬ";  hiri["ne"] = "ね"; hiri["no"] = "の"
-hiri["ha"] = "は"; hiri["hi"] = "ひ";  hiri["fu"] = "ふ";  hiri["he"] = "へ"; hiri["ho"] = "ほ"
-hiri["ma"] = "ま"; hiri["mi"] = "み";  hiri["mu"] = "む";  hiri["me"] = "め"; hiri["mo"] = "も"
-hiri["ya"] = "や";                     hiri["yu"] = "ゆ";                     hiri["yo"] = "よ"
-hiri["ra"] = "ら"; hiri["ri"] = "り";  hiri["ru"] = "る";  hiri["re"] = "れ"; hiri["ro"] = "ろ"
-hiri["ya"] = "わ";                                                            hiri["yo"] = "を"
-hiri["n."] = "ん"
+# Initialize accum. Read kana files.
+
+def read_kana_file( name ):
+    ret = {}
+    with open(name) as fh:
+        for line in fh:
+            line = line.strip()
+            if line != "":
+                kana = line.split(" ")[0]
+                string = line.split(" ")[1]
+                ret[string] = kana
+    return ret
+
+accum = ""
+chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,"
+
+hirigana = read_kana_file("hirigana.txt")
+katakana = read_kana_file("katakana.txt")
+
+
+# Parse a single word.
+
+def parse_word(word):
+    table = hirigana
+    ret = ""
+
+    if word[0] == ",":
+        table = katakana
+        word = word[1:]
+
+    while word != "":
+        changed = False
+
+        for i in [3, 2, 1]:
+            if word[:i] in table:
+                ret += table[word[:i]]
+                word = word[i:]
+                changed = True
+                break
+
+        if not changed:
+            word = word[1:]
+            ret += "?"
+
+    return ret
+
 
 def handle_command(cmd):
     for i in range(len(cmd)+2):
         keyboard.send("backspace")
+        time.sleep(.01)
 
-    while cmd != "":
-        for i in [3, 2, 1]:
-            if cmd[:i] in hiri:
-                print(hiri[cmd[:i]], end="")
-                cmd = cmd[i:]
-                break
+    output = ""
 
-    print()
+    for word in cmd.split(" "):
+        output += parse_word(word)
+
+    value = clipboard.paste()
+    clipboard.copy(output)
+    time.sleep(.1)
+    keyboard.send("ctrl+v")
+    time.sleep(.1)
+    clipboard.copy(value)
+
 
 def handle_key(key):
-    global accum, alpha 
+    global accum, chars 
 
     if accum == "":
         if key == ";":
             accum = ";"
 
     else:
-        if accum == ";" and key not in alpha:
+        if accum == ";" and key not in chars:
             accum = ""
             return
 
-        if key in alpha:
-            accum += key
-        elif key == "backspace":
-            accum = accum[:-1]
-        elif key == ";":
+        if key == ";":
             handle_command(accum[1:])
             accum = ""
+        elif len(key) == 1:
+            accum += key
+        elif key == "space":
+            accum += " "
+        elif key == "backspace":
+            accum = accum[:-1]
 
 def key_event(event):
     key = event.name
