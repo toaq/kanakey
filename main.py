@@ -74,7 +74,7 @@ def handle_command(cmd):
 
     for i in range(cmdlen + 2):
         keyboard.send("backspace")
-        time.sleep(.01)
+        time.sleep(.02)
 
     # Insert the output via the clipboard.
 
