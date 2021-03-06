@@ -12,8 +12,8 @@ def read_translation_file( name ):
         for line in fh:
             line = line.strip()
             if line != "":
-                kana = line.split(" ")[0]
-                string = line.split(" ")[1]
+                kana = line.split(" ")[1]
+                string = line.split(" ")[0]
                 ret[string] = kana
     return ret
 

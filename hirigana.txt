@@ -1,89 +1,133 @@
 
-あ a
-い i
-う u
-え e
-お o
+a あ
+i い
+u う
+e え
+o お
  
-か ka
-き ki
-く ku
-け ke
-こ ko
+ka か
+ki き
+ku く
+ke け
+ko こ
   
-さ sa
-し shi
-す su
-せ se
-そ so
+sa さ
+shi し
+su す
+se せ
+so そ
   
-た ta
-ち chi
-つ tsu
-て te
-と to
+ta た
+chi ち
+tsu つ
+te て
+to と
   
-な na
-に ni
-ぬ nu
-ね ne
-の no
+na な
+ni に
+nu ぬ
+ne ね
+no の
   
-は ha
-ひ hi
-ふ fu
-へ he
-ほ ho
+ha は
+hi ひ
+fu ふ
+he へ
+ho ほ
 
-ま ma
-み mi
-む mu
-め me
-も mo
+ma ま
+mi み
+mu む
+me め
+mo も
   
-や ya
-ゆ yu
-よ yo
+ya や
+yu ゆ
+yo よ
 
-ら ra
-り ri
-る ru
-れ re
-ろ ro
+ra ら
+ri り
+ru る
+re れ
+ro ろ
 
-わ wa
-を wo
+wa わ
+wo を
 　  
-ん n.
+n. ん
 
-が ga
-ぎ gi
-ぐ gu
-げ ge
-ご go
+ga が
+gi ぎ
+gu ぐ
+ge げ
+go ご
 
-ざ za
-じ ji
-ず zu
-ぜ ze
-ぞ zo
+za ざ
+ji じ
+zu ず
+ze ぜ
+zo ぞ
  
-だ da
-ぢ di   // pronounced "ji"
-づ du   // pronounced "zu"
-で de
-ど do
+da だ
+di ぢ   // pronounced "ji"
+du づ   // pronounced "zu"
+de で
+do ど
 
-ば ba
-び bi
-ぶ bu
-べ be
-ぼ bo
+ba ば
+bi び
+bu ぶ
+be べ
+bo ぼ
 
-ぱ pa
-ぴ pi
-ぷ pu
-ぺ pe
-ぽ po
+pa ぱ
+pi ぴ
+pu ぷ
+pe ぺ
+po ぽ
 
-っ sk
+sk っ
+
+kya きゃ
+kyu きゅ
+kyo きょ
+
+sha しゃ
+shu しゅ
+sho しょ
+
+cha ちゃ
+chu ちゅ
+cho ちょ
+
+nya にゃ
+nyu にゅ
+nyo にょ
+
+hya ひゃ
+hyu ひゅ
+hyo ひょ
+
+mya みゃ
+myu みゅ
+myo みょ
+
+rya りゃ
+ryu りゅ
+ryo りょ
+
+gya ぎゃ
+gyu ぎゅ
+gyo ぎょ
+
+ja じゃ
+ju じゅ
+jo じょ
+
+bya びゃ
+byu びゅ
+byo びょ
+
+pya ぴゃ
+pyu ぴゅ
+pyo ぴょ

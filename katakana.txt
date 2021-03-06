@@ -1,89 +1,162 @@
 
-ア a
-イ i	
-ウ u	
-エ e	
-オ o
+a ア
+i イ
+u ウ
+e エ
+o オ
 
-カ ka	
-キ ki	
-ク ku	
-ケ ke	
-コ ko
+ka カ
+ki キ
+ku ク
+ke ケ
+ko コ
 
-サ sa	
-シ shi	
-ス su	
-セ se	
-ソ so
+sa サ
+shi シ
+su ス
+se セ
+so ソ
 
-タ ta	
-チ chi	
-ツ tsu	
-テ te	
-ト to
+ta タ
+chi チ
+tsu ツ
+te テ
+to ト
 
-ナ na	
-ニ ni	
-ヌ nu	
-ネ ne	
-ノ no
+na ナ
+ni ニ
+nu ヌ
+ne ネ
+no ノ
 
-ハ ha	
-ヒ hi	
-フ fu	
-ヘ he	
-ホ ho
+ha ハ
+hi ヒ
+fu フ
+he ヘ
+ho ホ
 
-マ ma	
-ミ mi	
-ム mu	
-メ me	
-モ mo
+ma マ
+mi ミ
+mu ム
+me メ
+mo モ
 
-ヤ ya	
-ユ yu	
-ヨ yo
+ya ヤ
+yu ユ
+yo ヨ
 
-ラ ra	
-リ ri	
-ル ru	
-レ re	
-ロ ro
+ra ラ
+ri リ
+ru ル
+re レ
+ro ロ
 
-ワ wa
-ヲ wo
+wa ワ
+wo ヲ
 
-ン n.
+n. ン
 
-ガ ga  
-ギ gi  
-グ gu  
-ゲ ge  
-ゴ go
+ga ガ
+gi ギ
+gu グ
+ge ゲ
+go ゴ
 
-ザ za  
-ジ ji
-ズ zu  
-ゼ ze 
-ゾ zo
+za ザ
+ji ジ
+zu ズ
+ze ゼ
+zo ゾ
 
-ダ da  
-ヂ di   // pronounced "ji"
-ヅ du   // pronounced "zu"
-デ de  
-ド do
+da ダ
+di ヂ   // pronounced "ji"
+du ヅ   // pronounced "zu"
+de デ
+do ド
 
-バ ba  
-ビ bi  
-ブ bu  
-ベ be  
-ボ bo
+ba バ
+bi ビ
+bu ブ
+be ベ
+bo ボ
 
-パ pa  
-ピ pi  
-プ pu  
-ペ pe  
-ポ po
+pa パ
+pi ピ
+pu プ
+pe ペ
+po ポ
 
-ッ sk
+sk ッ
+
+kya キャ
+kyu キュ
+kyo キョ
+
+sha シャ
+shu シュ
+she シェ
+sho ショ
+
+cha チャ
+chu チュ
+che チェ
+cho チョ
+
+nya ニャ
+nyu ニュ
+nyo ニョ
+
+hya ヒャ
+hyu ヒュ
+hyo ヒョ
+
+mya ミャ
+myu ミュ
+myo ミョ
+
+rya リャ
+ryu リュ
+ryo リョ
+
+gya ギャ
+gyu ギュ
+gyo ギョ
+
+ja ジャ
+ju ジュ
+je ジェ
+jo ジョ
+
+bya ビャ
+byu ビュ
+byo ビョ
+
+pya ピャ
+pyu ピュ
+pyo ピョ
+
+wi ウィ
+we ウェ
+wo ウォ
+
+tsa ツァ
+tsi ツィ
+tse ツェ
+tso ツォ
+
+ti ティ
+
+fa ファ
+fi フィ
+fyu フュ
+fe フェ
+fo フォ
+
+di ディ
+dyu デュ
+
+va ヴァ
+vi ヴィ
+vu ヴ
+ve ヴェ
+vo ヴォ
