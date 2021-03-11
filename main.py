@@ -17,8 +17,8 @@ def read_translation_file( name ):
                 ret[string] = kana
     return ret
 
+active = False
 accum = ""
-chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,\\"
 
 hirigana = read_translation_file("hirigana.txt")
 katakana = read_translation_file("katakana.txt")
@@ -27,6 +27,18 @@ special  = read_translation_file("special.txt")
 modes = [hirigana, katakana]
 
 modifiers_down = {}
+
+
+# Paste a value using the clipboard. Restore original clipboard contents
+# afterwards.
+
+def paste_using_clipboard(text):
+    value = clipboard.paste()
+    clipboard.copy(text)
+    time.sleep(.1)
+    keyboard.send("shift+insert")
+    time.sleep(.1)
+    clipboard.copy(value)
 
 
 # Grab the next token off the front of the command. Return its output
@@ -78,49 +90,61 @@ def handle_command(cmd):
 
     # Insert the output via the clipboard.
 
-    value = clipboard.paste()
-    clipboard.copy(output)
-    time.sleep(.1)
-    keyboard.send("shift+insert")
-    time.sleep(.1)
-    clipboard.copy(value)
+    paste_using_clipboard(output)
 
 
 # Handle a single key.
 
 def handle_key(key):
-    global accum, chars 
+    global active, accum
 
-    if accum == "":
-        if key == ";":
-            accum = ";"
+    if not active:
+        return
 
-    else:
-        if accum == ";" and key not in chars:
-            accum = ""
-            return
-
-        if key == ";":
-            handle_command(accum[1:])
-            accum = ""
-        elif len(key) == 1:
-            accum += key
-        elif key == "space":
-            accum += " "
-        elif key == "backspace":
-            accum = accum[:-1]
+    if key == ";":
+        handle_command(accum)
+        active = False
+    elif len(key) == 1:
+        accum += key
+    elif key == "space":
+        accum += " "
+    elif key == "backspace":
+        accum = accum[:-1]
 
 
 # Key event listener (passes important keys on to handle_key()).
 
+calls = 0
+
 def key_event(event):
+    global active, accum, calls
+
+    calls += 1
+    if calls > 100:
+        print("skipping")
+        return
+
     key = event.name
+    mods = event.modifiers
+    print(key, mods, "(", accum, ")")
+
+    if key == ";" and mods == ("alt",):
+        time.sleep(1)
+        paste_using_clipboard("Romaji input: ")
+        accum = ""
+        active = True
+        return
 
     if key not in keyboard.all_modifiers:
-        if "ctrl" not in event.modifiers:
-            handle_key(key)
-            print(key, "(", accum, ")")
+        handle_key(key)
 
 
 keyboard.on_press( key_event )
 keyboard.wait()
+
+
+#time.sleep(3)
+#print("now")
+#keyboard.send("shift+insert")
+#print("ok")
+#keyboard.wait()
