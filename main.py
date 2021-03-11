@@ -4,6 +4,7 @@ import time
 import keyboard
 import clipboard
 import subprocess
+from enum import Enum
 
 
 # Get a dictionary of the strings and results from a file.
@@ -61,7 +62,9 @@ def next_token(cmd, table):
 # Handle a full command.
 
 def handle_command(cmd):
-    global items
+    global states, state, items
+
+    print("Handling command: " + cmd)
 
     cmdlen = len(cmd)
     output = ""
@@ -86,14 +89,19 @@ def handle_command(cmd):
         keyboard.send("backspace")
         time.sleep(.02)
 
+        if state == states.inactive:
+            print("Command cancelled by global state change")
+            return
+
     # Insert the output.
 
+    print("Result: " + output)
     write_text(output)
 
 
 # Handle a single key.
 
-def handle_key(key):
+def accum_key(key):
     global accum
 
     if len(key) == 1:
@@ -104,31 +112,24 @@ def handle_key(key):
         accum = accum[:-1]
 
 
-# Become active.
+# Turn the trayicon indicator on.
 
-def activate():
-    global active, accum
-
-    active = True
-    accum = ""
+def indicator_on():
     print("activate")
     sys.stdout.flush()
 
 
-# Become inactive.
+# Turn the trayicon indicator off.
 
-def deactivate():
-    global active
-
-    active = False
+def indicator_off():
     print("deactivate")
     sys.stdout.flush()
 
 
-# Key event listener (passes important keys on to handle_key()).
+# Key event listener.
 
 def key_event(event):
-    global active, accum
+    global states, state, accum
 
     key = event.name
     mods = event.modifiers
@@ -136,34 +137,52 @@ def key_event(event):
     if capslock() and len(key) == 1:
         key = key.swapcase()
 
-    if key == ";" and mods == ("alt",):
-        if active:
-            deactivate()
+    # Handle key depending on states.
+
+    if state == states.inactive:
+        if key == ";" and mods == ("alt",):
+            accum = ""
+            state = states.listening
+            indicator_on()
         else:
-            activate()
-        return
+            return
 
-    if key == "enter":
-        if active:
-            deactivate()
-            handle_command(accum)
-        return
+    elif state == states.listening:
+        if key == ";" and mods == ():
+            state = states.working
+            handle_command( accum )
+            state = states.inactive
+            indicator_off()
 
-    if active and mods in [(), ("shift",)]:
-        handle_key(key)
+        elif key == "esc":
+            state = states.inactive
+            indicator_off()
 
-    print( key, mods )
-    sys.stdout.flush()
+        elif mods == () or mods == ("shift",):
+            accum_key( key )
+
+    elif state == states.working:
+        if key == "esc":
+            print("canceling!")
+            state == states.inactive
+
+    #print( key, mods, "(", accum, ")" )
+    #sys.stdout.flush()
 
 
-# Set up keyboard stuff.
+# Load translation items.
 
 items       = read_translation_file("items/hirigana.txt")
 items.update( read_translation_file("items/katakana.txt") )
 items.update( read_translation_file("items/special.txt") )
 
-active = False
+# Set up global state.
+
+states = Enum( "states", "inactive listening working" )
+state = states.inactive
 accum = ""
+
+# Register keyboard hook and wait indefinitely.
 
 keyboard.on_press( key_event )
 keyboard.wait()

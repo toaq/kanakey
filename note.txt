@@ -13,3 +13,5 @@ New system (?):
        literal characters.
 
     Unsure how to handle special characters like ￥.
+
+    The end could be signaled with q or x or something.
