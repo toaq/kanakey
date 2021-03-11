@@ -53,7 +53,7 @@ def next_token(cmd, table):
     return (cmd[0], cmd[1:])
 
 
-# Handle a full command from the initial ; to the final ;.
+# Handle a full command.
 
 def handle_command(cmd):
     global modes
@@ -64,7 +64,7 @@ def handle_command(cmd):
 
     while cmd != "":
 
-        # \ marks the beginning of a special command (like $ for ￥)
+        # \ marks the beginning of a special command (like $ for ￥).
 
         if cmd[0] == "\\":
             token, cmd = next_token( cmd[1:], special )
@@ -76,7 +76,7 @@ def handle_command(cmd):
             mode = (mode + 1) % len(modes)
             cmd = cmd[1:]
 
-        # Anything else is parsed as kana:
+        # Anything else is parsed as kana.
 
         else:
             token, cmd = next_token( cmd, modes[mode] )
@@ -120,7 +120,7 @@ def key_event(event):
     global active, accum, calls
 
     calls += 1
-    if calls > 100:
+    if calls > 1000:
         print("skipping")
         return
 
