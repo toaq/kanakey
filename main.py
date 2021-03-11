@@ -4,6 +4,7 @@ import time
 import keyboard
 import clipboard
 import subprocess
+import threading
 from enum import Enum
 
 
@@ -65,6 +66,7 @@ def handle_command(cmd):
     global states, state, items
 
     print("Handling command: " + cmd)
+    sys.stdout.flush()
 
     cmdlen = len(cmd)
     output = ""
@@ -90,13 +92,15 @@ def handle_command(cmd):
         time.sleep(.02)
 
         if state == states.inactive:
-            print("Command cancelled by global state change")
             return
 
     # Insert the output.
 
     print("Result: " + output)
+    sys.stdout.flush()
+
     write_text(output)
+    state = states.inactive
 
 
 # Handle a single key.
@@ -137,6 +141,18 @@ def key_event(event):
     if capslock() and len(key) == 1:
         key = key.swapcase()
 
+    # Print report of what just happened.
+
+    log = "[" + state.name
+    
+    if state == states.listening:
+        log += ", "
+        log += accum
+
+    log += "] " + key + " " + str(mods)
+    print(log)
+    sys.stdout.flush()
+
     # Handle key depending on states.
 
     if state == states.inactive:
@@ -144,15 +160,15 @@ def key_event(event):
             accum = ""
             state = states.listening
             indicator_on()
-        else:
-            return
 
     elif state == states.listening:
         if key == ";" and mods == ():
             state = states.working
-            handle_command( accum )
-            state = states.inactive
             indicator_off()
+
+            work_thread = threading.Thread( target=handle_command, args=(accum,) )
+            work_thread.start()
+
 
         elif key == "esc":
             state = states.inactive
@@ -163,11 +179,7 @@ def key_event(event):
 
     elif state == states.working:
         if key == "esc":
-            print("canceling!")
-            state == states.inactive
-
-    #print( key, mods, "(", accum, ")" )
-    #sys.stdout.flush()
+            state = states.inactive
 
 
 # Load translation items.
