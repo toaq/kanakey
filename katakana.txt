@@ -1,162 +1,162 @@
 
-a ア
-i イ
-u ウ
-e エ
-o オ
+A ア
+I イ
+U ウ
+E エ
+O オ
 
-ka カ
-ki キ
-ku ク
-ke ケ
-ko コ
+KA カ
+KI キ
+KU ク
+KE ケ
+KO コ
 
-sa サ
-shi シ
-su ス
-se セ
-so ソ
+SA サ
+SHI シ
+SU ス
+SE セ
+SO ソ
 
-ta タ
-chi チ
-tsu ツ
-te テ
-to ト
+TA タ
+CHI チ
+TSU ツ
+TE テ
+TO ト
 
-na ナ
-ni ニ
-nu ヌ
-ne ネ
-no ノ
+NA ナ
+NI ニ
+NU ヌ
+NE ネ
+NO ノ
 
-ha ハ
-hi ヒ
-fu フ
-he ヘ
-ho ホ
+HA ハ
+HI ヒ
+FU フ
+HE ヘ
+HO ホ
 
-ma マ
-mi ミ
-mu ム
-me メ
-mo モ
+MA マ
+MI ミ
+MU ム
+ME メ
+MO モ
 
-ya ヤ
-yu ユ
-yo ヨ
+YA ヤ
+YU ユ
+YO ヨ
 
-ra ラ
-ri リ
-ru ル
-re レ
-ro ロ
+RA ラ
+RI リ
+RU ル
+RE レ
+RO ロ
 
-wa ワ
-wo ヲ
+WA ワ
+WO ヲ
 
-n. ン
+N. ン
 
-ga ガ
-gi ギ
-gu グ
-ge ゲ
-go ゴ
+GA ガ
+GI ギ
+GU グ
+GE ゲ
+GO ゴ
 
-za ザ
-ji ジ
-zu ズ
-ze ゼ
-zo ゾ
+ZA ザ
+JI ジ
+ZU ズ
+ZE ゼ
+ZO ゾ
 
-da ダ
-di ヂ   // pronounced "ji"
-du ヅ   // pronounced "zu"
-de デ
-do ド
+DA ダ
+DI ヂ   // pronounced "ji"
+DU ヅ   // pronounced "zu"
+DE デ
+DO ド
 
-ba バ
-bi ビ
-bu ブ
-be ベ
-bo ボ
+BA バ
+BI ビ
+BU ブ
+BE ベ
+BO ボ
 
-pa パ
-pi ピ
-pu プ
-pe ペ
-po ポ
+PA パ
+PI ピ
+PU プ
+PE ペ
+PO ポ
 
-sk ッ
+SK ッ
 
-kya キャ
-kyu キュ
-kyo キョ
+KYA キャ
+KYU キュ
+KYO キョ
 
-sha シャ
-shu シュ
-she シェ
-sho ショ
+SHA シャ
+SHU シュ
+SHE シェ
+SHO ショ
 
-cha チャ
-chu チュ
-che チェ
-cho チョ
+CHA チャ
+CHU チュ
+CHE チェ
+CHO チョ
 
-nya ニャ
-nyu ニュ
-nyo ニョ
+NYA ニャ
+NYU ニュ
+NYO ニョ
 
-hya ヒャ
-hyu ヒュ
-hyo ヒョ
+HYA ヒャ
+HYU ヒュ
+HYO ヒョ
 
-mya ミャ
-myu ミュ
-myo ミョ
+MYA ミャ
+MYU ミュ
+MYO ミョ
 
-rya リャ
-ryu リュ
-ryo リョ
+RYA リャ
+RYU リュ
+RYO リョ
 
-gya ギャ
-gyu ギュ
-gyo ギョ
+GYA ギャ
+GYU ギュ
+GYO ギョ
 
-ja ジャ
-ju ジュ
-je ジェ
-jo ジョ
+JA ジャ
+JU ジュ
+JE ジェ
+JO ジョ
 
-bya ビャ
-byu ビュ
-byo ビョ
+BYA ビャ
+BYU ビュ
+BYO ビョ
 
-pya ピャ
-pyu ピュ
-pyo ピョ
+PYA ピャ
+PYU ピュ
+PYO ピョ
 
-wi ウィ
-we ウェ
-wo ウォ
+WI ウィ
+WE ウェ
+WO ウォ
 
-tsa ツァ
-tsi ツィ
-tse ツェ
-tso ツォ
+TSA ツァ
+TSI ツィ
+TSE ツェ
+TSO ツォ
 
-ti ティ
+TI ティ
 
-fa ファ
-fi フィ
-fyu フュ
-fe フェ
-fo フォ
+FA ファ
+FI フィ
+FYU フュ
+FE フェ
+FO フォ
 
-di ディ
-dyu デュ
+DI ディ
+DYU デュ
 
-va ヴァ
-vi ヴィ
-vu ヴ
-ve ヴェ
-vo ヴォ
+VA ヴァ
+VI ヴィ
+VU ヴ
+VE ヴェ
+VO ヴォ

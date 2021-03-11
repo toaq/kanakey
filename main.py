@@ -2,9 +2,11 @@
 import keyboard
 import clipboard
 import time
+import pystray
+from PIL import Image, ImageDraw, ImageFont
 
 
-# Initialize accum. Read kana files.
+# Get a dictionary of the strings and results from a file.
 
 def read_translation_file( name ):
     ret = {}
@@ -12,21 +14,11 @@ def read_translation_file( name ):
         for line in fh:
             line = line.strip()
             if line != "":
-                kana = line.split(" ")[1]
                 string = line.split(" ")[0]
-                ret[string] = kana
+                result = line.split(" ")[1]
+                ret[string] = result
+
     return ret
-
-active = False
-accum = ""
-
-hirigana = read_translation_file("hirigana.txt")
-katakana = read_translation_file("katakana.txt")
-special  = read_translation_file("special.txt")
-
-modes = [hirigana, katakana]
-
-modifiers_down = {}
 
 
 # Paste a value using the clipboard. Restore original clipboard contents
@@ -42,7 +34,7 @@ def paste_using_clipboard(text):
 
 
 # Grab the next token off the front of the command. Return its output
-# and the tail of the command.
+# and the tail (unusued portion) of the command.
 
 def next_token(cmd, table):
     for i in [3, 2, 1]:
@@ -56,41 +48,55 @@ def next_token(cmd, table):
 # Handle a full command.
 
 def handle_command(cmd):
-    global modes
+    global items
 
     cmdlen = len(cmd)
-    mode = 0
     output = ""
 
     while cmd != "":
 
-        # \ marks the beginning of a special command (like $ for ￥).
+        # \ marks a literal character.
 
         if cmd[0] == "\\":
-            token, cmd = next_token( cmd[1:], special )
+            token, cmd = cmd[1], cmd[2:]
             output += token
 
-        # , switches between hirigana mode and katakana mode.
-
-        elif cmd[0] == ",":
-            mode = (mode + 1) % len(modes)
-            cmd = cmd[1:]
-
-        # Anything else is parsed as kana.
+        # Anything else is parsed as kana (for now).
 
         else:
-            token, cmd = next_token( cmd, modes[mode] )
+            token, cmd = next_token( cmd, items )
             output += token
 
-    # Backspace over the whole command string (including both ;'s).
+    # Backspace over the whole command string.
 
-    for i in range(cmdlen + 2):
+    for i in range(cmdlen + 1):
         keyboard.send("backspace")
         time.sleep(.02)
 
     # Insert the output via the clipboard.
 
     paste_using_clipboard(output)
+
+
+# Become active.
+
+def activate():
+    #global active, accum, icon, active_png
+    global active, accum
+
+    active = True
+    accum = ""
+    #icon.image = active_png
+
+
+# Become inactive.
+
+def deactivate():
+    #global active, icon, inactive_png
+    global active
+
+    active = False
+    #icon.image = inactive_png
 
 
 # Handle a single key.
@@ -103,7 +109,7 @@ def handle_key(key):
 
     if key == ";":
         handle_command(accum)
-        active = False
+        deactivate()
     elif len(key) == 1:
         accum += key
     elif key == "space":
@@ -114,37 +120,38 @@ def handle_key(key):
 
 # Key event listener (passes important keys on to handle_key()).
 
-calls = 0
-
 def key_event(event):
-    global active, accum, calls
-
-    calls += 1
-    if calls > 1000:
-        print("skipping")
-        return
+    global active, accum
 
     key = event.name
     mods = event.modifiers
-    print(key, mods, "(", accum, ")")
 
     if key == ";" and mods == ("alt",):
-        time.sleep(1)
-        paste_using_clipboard("Romaji input: ")
-        accum = ""
-        active = True
+        activate()
         return
 
     if key not in keyboard.all_modifiers:
         handle_key(key)
+        print(key, mods, "(", accum, ")")
 
+
+# Set up keyboard stuff.
+
+items       = read_translation_file("hirigana.txt")
+items.update( read_translation_file("katakana.txt") )
+items.update( read_translation_file("special.txt") )
 
 keyboard.on_press( key_event )
+
+
+# Set up trayicon.
+
+active_png   = Image.open("icon/active.png")
+inactive_png = Image.open("icon/inactive.png")
+
+active = False
+accum = ""
+#icon = pystray.Icon("JPN input", inactive_png)
+#icon.run()
+
 keyboard.wait()
-
-
-#time.sleep(3)
-#print("now")
-#keyboard.send("shift+insert")
-#print("ok")
-#keyboard.wait()
