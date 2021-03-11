@@ -169,6 +169,10 @@ def key_event(event):
             work_thread = threading.Thread( target=handle_command, args=(accum,) )
             work_thread.start()
 
+        if key == ";" and mods == ("alt",):
+            state = states.inactive
+            indicator_off()
+
 
         elif key == "esc":
             state = states.inactive
