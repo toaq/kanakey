@@ -3,6 +3,7 @@ import sys
 import time
 import keyboard
 import clipboard
+import subprocess
 
 
 # Get a dictionary of the strings and results from a file.
@@ -18,6 +19,19 @@ def read_translation_file( name ):
                 ret[string] = result
 
     return ret
+
+
+# Determine whether capslock is on (code taken from: https://stackoverflow.com/questions/13129804/python-how-to-get-current-keylock-status)
+
+def capslock():
+    output = subprocess.check_output('xset q | grep LED', shell=True)[65]
+
+    if output == 48:
+        return False
+    if output == 49:
+        return True
+
+    raise Exception("JPN input: capslock() has gone off the rails (" + str(output) + ")")
 
 
 # Paste a value using the clipboard. Restore original clipboard contents
@@ -82,10 +96,7 @@ def handle_command(cmd):
 def handle_key(key):
     global accum
 
-    if key == ";":
-        deactivate()
-        handle_command(accum)
-    elif len(key) == 1:
+    if len(key) == 1:
         accum += key
     elif key == "space":
         accum += " "
@@ -122,6 +133,9 @@ def key_event(event):
     key = event.name
     mods = event.modifiers
 
+    if capslock() and len(key) == 1:
+        key = key.swapcase()
+
     if key == ";" and mods == ("alt",):
         if active:
             deactivate()
@@ -129,8 +143,17 @@ def key_event(event):
             activate()
         return
 
+    if key == "enter":
+        if active:
+            deactivate()
+            handle_command(accum)
+        return
+
     if active and mods in [(), ("shift",)]:
         handle_key(key)
+
+    print( key, mods )
+    sys.stdout.flush()
 
 
 # Set up keyboard stuff.

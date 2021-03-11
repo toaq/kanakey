@@ -13,8 +13,10 @@ def loop():
 
         if line == "activate":
             icon.icon = active_png
-        else:
+        elif line == "deactivate":
             icon.icon = inactive_png
+        else:
+            print( line )
 
     print("tray icon daemon: stdin was closed (??)")
     sys.exit(0)
