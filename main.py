@@ -1,9 +1,8 @@
 
+import sys
+import time
 import keyboard
 import clipboard
-import time
-import pystray
-from PIL import Image, ImageDraw, ImageFont
 
 
 # Get a dictionary of the strings and results from a file.
@@ -24,7 +23,7 @@ def read_translation_file( name ):
 # Paste a value using the clipboard. Restore original clipboard contents
 # afterwards.
 
-def paste_using_clipboard(text):
+def write_text(text):
     value = clipboard.paste()
     clipboard.copy(text)
     time.sleep(.1)
@@ -73,49 +72,46 @@ def handle_command(cmd):
         keyboard.send("backspace")
         time.sleep(.02)
 
-    # Insert the output via the clipboard.
+    # Insert the output.
 
-    paste_using_clipboard(output)
-
-
-# Become active.
-
-def activate():
-    #global active, accum, icon, active_png
-    global active, accum
-
-    active = True
-    accum = ""
-    #icon.image = active_png
-
-
-# Become inactive.
-
-def deactivate():
-    #global active, icon, inactive_png
-    global active
-
-    active = False
-    #icon.image = inactive_png
+    write_text(output)
 
 
 # Handle a single key.
 
 def handle_key(key):
-    global active, accum
-
-    if not active:
-        return
+    global accum
 
     if key == ";":
-        handle_command(accum)
         deactivate()
+        handle_command(accum)
     elif len(key) == 1:
         accum += key
     elif key == "space":
         accum += " "
     elif key == "backspace":
         accum = accum[:-1]
+
+
+# Become active.
+
+def activate():
+    global active, accum
+
+    active = True
+    accum = ""
+    print("activate")
+    sys.stdout.flush()
+
+
+# Become inactive.
+
+def deactivate():
+    global active
+
+    active = False
+    print("deactivate")
+    sys.stdout.flush()
 
 
 # Key event listener (passes important keys on to handle_key()).
@@ -127,32 +123,25 @@ def key_event(event):
     mods = event.modifiers
 
     if key == ";" and mods == ("alt",):
-        activate()
+        if active:
+            deactivate()
+        else:
+            activate()
         return
 
-    if key not in keyboard.all_modifiers:
+    if active and mods in [(), ("shift",)]:
         handle_key(key)
-        print(key, mods, "(", accum, ")")
 
 
 # Set up keyboard stuff.
 
-items       = read_translation_file("hirigana.txt")
-items.update( read_translation_file("katakana.txt") )
-items.update( read_translation_file("special.txt") )
-
-keyboard.on_press( key_event )
-
-
-# Set up trayicon.
-
-#active_png   = Image.open("icon/active.png")
-#inactive_png = Image.open("icon/inactive.png")
+items       = read_translation_file("items/hirigana.txt")
+items.update( read_translation_file("items/katakana.txt") )
+items.update( read_translation_file("items/special.txt") )
 
 active = False
 accum = ""
-#icon = pystray.Icon("JPN input", inactive_png)
-#icon.run()
 
+keyboard.on_press( key_event )
 keyboard.wait()
 
