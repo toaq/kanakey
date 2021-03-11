@@ -146,8 +146,8 @@ keyboard.on_press( key_event )
 
 # Set up trayicon.
 
-active_png   = Image.open("icon/active.png")
-inactive_png = Image.open("icon/inactive.png")
+#active_png   = Image.open("icon/active.png")
+#inactive_png = Image.open("icon/inactive.png")
 
 active = False
 accum = ""
@@ -155,3 +155,4 @@ accum = ""
 #icon.run()
 
 keyboard.wait()
+
