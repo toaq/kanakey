@@ -1,0 +1,15 @@
+
+Idea: use capital letters to signal katakana.
+
+New system (?):
+
+    1. JPN mode is activated and concluded with alt+;.
+    2. JPN mode status is indicated in the Xfce status bar.
+    3. In kana mode, lowercase is hirigana and uppercase is katakana.
+    4. Use a pair of ; to delimit a kanji.
+    5. In the printing phase, kanji ambiguities are resolved by asking
+       for additional input.
+    6. Translations of eg . to 。are made automatically, use \ to get
+       literal characters.
+
+    Unsure how to handle special characters like ￥.
