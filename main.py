@@ -173,11 +173,6 @@ def key_event(event):
             state = states.inactive
             indicator_off()
 
-
-        elif key == "esc":
-            state = states.inactive
-            indicator_off()
-
         elif mods == () or mods == ("shift",):
             accum_key( key )
 
