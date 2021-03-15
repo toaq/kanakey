@@ -11,7 +11,7 @@
 ) ）
 [( 【
 )] 】
-- ー
+− ー    // special dash character is what Python sees the "-" key as
 
 ... …
 * ・
