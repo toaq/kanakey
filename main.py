@@ -42,9 +42,9 @@ def capslock():
 def write_text(text):
     value = clipboard.paste()
     clipboard.copy(text)
-    time.sleep(.1)
+    time.sleep(.3)
     keyboard.send("shift+insert")
-    time.sleep(.1)
+    time.sleep(.3)
     clipboard.copy(value)
 
 
@@ -60,6 +60,83 @@ def next_token(cmd, table):
     return (cmd[0], cmd[1:])
 
 
+# Convert a kana command into kana.
+
+def interpret_kana_command(cmd):
+    ret = ""
+
+    while cmd != "":
+
+        # \ marks a literal character.
+
+        if cmd[0] == "\\":
+            token, cmd = cmd[1], cmd[2:]
+            ret += token
+
+        # Anything else is parsed as kana (for now).
+
+        else:
+            token, cmd = next_token( cmd, items )
+            ret += token
+
+    return ret
+
+
+# Add a tone to a single Toaq word.
+
+def tonify_word(word, tone):
+    marks = {
+        "a": "aāáäảâàãaǎ",
+        "e": "eēéëẻêèẽeě",
+        "i": "iīíïỉîìĩıǐ",
+        "o": "oōóöỏôòõoǒ",
+        "u": "uūúüủûùũuǔ",
+        "y": "yȳýÿỷŷỳỹyy̌",
+        "m": "mm̄ḿm̈m̉m̂m̀m̃mm̌",
+        "M": "MM̄ḾM̈M̉M̂M̀M̃MM̌",
+    }
+
+    next_vowel_tone = tone
+    ret = ""
+
+    for letter in word:
+        if letter in "aeiouy":
+            ret += marks[letter][next_vowel_tone]
+            next_vowel_tone = 0
+
+        else:
+            ret += letter
+            if next_vowel_tone == 0:
+                next_vowel_tone = 1
+
+    return ret.replace("i", "ı")
+
+
+# Interpret a Toaq command.
+
+def interpret_toaq_command(cmd):
+    ret = ""
+    word = ""
+
+    for c in cmd + ".":
+        if c in "abcdefghijklmnopqrstuyz123456789":
+            word += c
+        else:
+            if word != "":
+                if word[-1] in "123456789":
+                    tone = int(word[-1])
+                    word = word[:-1]
+                else:
+                    tone = 8
+
+                ret += tonify_word(word, tone)
+                word = ""
+
+            ret += c
+
+    return ret[:-1]
+
+
 # Handle a full command.
 
 def handle_command(cmd):
@@ -68,26 +145,18 @@ def handle_command(cmd):
     print("Handling command: " + cmd)
     sys.stdout.flush()
 
-    cmdlen = len(cmd)
-    output = ""
+    # Determine which command is being run and get the ouput of it.
 
-    while cmd != "":
-
-        # \ marks a literal character.
-
-        if cmd[0] == "\\":
-            token, cmd = cmd[1], cmd[2:]
-            output += token
-
-        # Anything else is parsed as kana (for now).
-
-        else:
-            token, cmd = next_token( cmd, items )
-            output += token
+    if cmd[0] == "j":
+        output = interpret_kana_command(cmd[1:])
+    elif cmd[0] == "t":
+        output = interpret_toaq_command(cmd[1:])
+    else:
+        output = "[kanakey: unknown command type]"
 
     # Backspace over the whole command string.
 
-    for i in range(cmdlen + 1):
+    for i in range(len(cmd) + 1):
         keyboard.send("backspace")
         time.sleep(.02)
 
@@ -101,19 +170,6 @@ def handle_command(cmd):
 
     write_text(output)
     state = states.inactive
-
-
-# Handle a single key.
-
-def accum_key(key):
-    global accum
-
-    if len(key) == 1:
-        accum += key
-    elif key == "space":
-        accum += " "
-    elif key == "backspace":
-        accum = accum[:-1]
 
 
 # Turn the trayicon indicator on.
@@ -174,7 +230,12 @@ def key_event(event):
             indicator_off()
 
         elif mods == () or mods == ("shift",):
-            accum_key( key )
+            if len(key) == 1:
+                accum += key
+            elif key == "space":
+                accum += " "
+            elif key == "backspace":
+                accum = accum[:-1]
 
     elif state == states.working:
         if key == "esc":
