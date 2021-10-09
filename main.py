@@ -169,6 +169,8 @@ def handle_command(cmd):
 
     # Backspace over the whole command string.
 
+    time.sleep(.1)
+
     for i in range(len(cmd) + 1):
         keyboard.send("backspace")
         time.sleep(.02)
