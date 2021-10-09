@@ -235,10 +235,11 @@ def key_event(event):
         key = key.swapcase()
 
     if "shift" in mods:
-        if key.isalpha():
-            key = key.swapcase()
-        else:
-            key = shifter[key]
+        if len(key) == 1:
+            if key.isalpha():
+                key = key.swapcase()
+            else:
+                key = shifter[key]
 
     # Print report of what just happened.
 
