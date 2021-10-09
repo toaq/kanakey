@@ -86,14 +86,23 @@ def interpret_kana_command(cmd):
 
 def tonify_word(word, tone):
     marks = {
-        "a": "aāáäảâàãaǎ",
-        "e": "eēéëẻêèẽeě",
-        "i": "iīíïỉîìĩıǐ",
-        "o": "oōóöỏôòõoǒ",
-        "u": "uūúüủûùũuǔ",
-        "y": "yȳýÿỷŷỳỹyy̌",
+        "a": "aaáäaâàãaǎ",
+        "e": "eeéëeêèẽeě",
+        "i": "iıíïıîìĩıǐ",
+        "o": "ooóöoôòõoǒ",
+        "u": "uuúüuûùũuǔ",
+        "y": "yyýÿyŷỳỹyy̌",
         "m": "mm̄ḿm̈m̉m̂m̀m̃mm̌",
         "M": "MM̄ḾM̈M̉M̂M̀M̃MM̌",
+
+        #"a": "aāáäảâàãaǎ",
+        #"e": "eēéëẻêèẽeě",
+        #"i": "iīíïỉîìĩıǐ",
+        #"o": "oōóöỏôòõoǒ",
+        #"u": "uūúüủûùũuǔ",
+        #"y": "yȳýÿỷŷỳỹyy̌",
+        #"m": "mm̄ḿm̈m̉m̂m̀m̃mm̌",
+        #"M": "MM̄ḾM̈M̉M̂M̀M̃MM̌",
     }
 
     next_vowel_tone = tone
@@ -134,6 +143,8 @@ def interpret_toaq_command(cmd):
 
             ret += c
 
+    ret = ret.replace("<<", "«")
+    ret = ret.replace(">>", "»")
     return ret[:-1]
 
 
@@ -147,12 +158,14 @@ def handle_command(cmd):
 
     # Determine which command is being run and get the ouput of it.
 
-    if cmd[0] == "j":
-        output = interpret_kana_command(cmd[1:])
-    elif cmd[0] == "t":
-        output = interpret_toaq_command(cmd[1:])
-    else:
-        output = "[kanakey: unknown command type]"
+    #if cmd[0] == "j":
+        #output = interpret_kana_command(cmd[1:])
+    #elif cmd[0] == "t":
+        #output = interpret_toaq_command(cmd[1:])
+    #else:
+        #output = "[kanakey: unknown command type]"
+
+    output = interpret_toaq_command(cmd)
 
     # Backspace over the whole command string.
 
@@ -188,6 +201,28 @@ def indicator_off():
 
 # Key event listener.
 
+shifter = {"1": "!",
+           "2": "@",
+           "3": "#",
+           "4": "$",
+           "5": "%",
+           "6": "^",
+           "7": "&",
+           "8": "*",
+           "9": "(",
+           "0": ")",
+           "-": "_",
+           "−": "_",
+           "=": "+",
+           "[": "{",
+           "]": "}",
+           "\\": "|",
+           ";": ":",
+           "'": "\"",
+           ",": "<",
+           ".": ">",
+           "/": "?"}
+
 def key_event(event):
     global states, state, accum
 
@@ -196,6 +231,12 @@ def key_event(event):
 
     if capslock() and len(key) == 1:
         key = key.swapcase()
+
+    if "shift" in mods:
+        if key.isalpha():
+            key = key.swapcase()
+        else:
+            key = shifter[key]
 
     # Print report of what just happened.
 
