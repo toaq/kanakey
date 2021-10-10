@@ -86,12 +86,12 @@ def interpret_kana_command(cmd):
 
 def tonify_word(word, tone):
     marks = {
-        "a": "aaáäaâàãaǎ",
-        "e": "eeéëeêèẽeě",
-        "i": "iıíïıîìĩıǐ",
-        "o": "ooóöoôòõoǒ",
-        "u": "uuúüuûùũuǔ",
-        "y": "yyýÿyŷỳỹyy̌",
+        "a": "aaáäảâàãaǎ",
+        "e": "eeéëẻêèẽeě",
+        "i": "iıíïỉîìĩıǐ",
+        "o": "ooóöỏôòõoǒ",
+        "u": "uuúüủûùũuǔ",
+        "y": "yyýÿỷŷỳỹyy̌",
         "m": "mm̄ḿm̈m̉m̂m̀m̃mm̌",
         "M": "MM̄ḾM̈M̉M̂M̀M̃MM̌",
 
